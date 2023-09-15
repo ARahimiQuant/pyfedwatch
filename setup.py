@@ -19,6 +19,8 @@ setup(
         'python-dateutil>=2.8.2',
         'pytz>=2023.3.post1',
         'tzdata>=2023.3',
+        'matplotlib>=3.8.0',
+        'holidays>=0.32',
     ],
     license='Apache-2.0',
 )
