@@ -39,9 +39,9 @@ PyFedWatch generates two significant outputs when provided with fed funds future
 <br>
 
 > FOMC Calendar:
-```
-import pyfedwatch as fw
 
+```python
+import pyfedwatch as fw
 fomc = fw.fomc.FOMC(watch_date = '2023-03-10',
                     fomc_dates = fomc_dates,
                     num_upcoming = 9)
@@ -59,9 +59,8 @@ fig = fomc.plot_fomc_calendar()
 <br>
 
 > Calculated probabilities of target rates for the upcoming 9 FOMC meetings with a watch date of March 10, 2023:
-```
+```python
 import pyfedwatch as fw
-
 fedwatch = fw.fedwatch.FedWatch(watch_date = '2023-03-10',
                                 fomc_dates = fomc_dates,
                                 num_upcoming = 9,
