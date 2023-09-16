@@ -338,11 +338,11 @@ class FOMC():
         # Add a footnote to the plot
         plt.figtext(
             0.03, -0.01,
-            r'$\bf{Note}$: The calendar includes only the months and relevant Globex contract symbols, required for CME FedWatch calculations. '
-            f'It begins with a no-FOMC month before the calculation day and continues until \nanother no-FOMC month, following '
-            f'the requested number of upcoming FOMC meetings. FOMC meeting days are indicated with blue shaded boxes, and the red shaded box represents the calculation day.',
-            fontsize=10, horizontalalignment='left'
-        )
+            r'$\bf{Note}$: The calendar includes the months for which corresponding Fed Funds Futures contracts pricing data ' 
+            f'is required for FedWatch calculations. It starts with a no-FOMC month and continues for the requested \nnumber ' 
+            f'of upcoming meetings, looking forward from the watch date, until another no-FOMC month. FOMC meeting days are ' 
+            f'indicated with blue shaded boxes, and the red shaded box represents the watch day.',
+            fontsize=10, horizontalalignment='left')
 
         fig.tight_layout();
         
