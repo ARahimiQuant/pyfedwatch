@@ -33,6 +33,7 @@ The scope of PyFedWatch is focused solely on the implementation of the FedWatch 
 
 ## PyfedWatch Outputs
 
+PyFedWatch generates two significant outputs when provided with fed funds futures pricing data and FOMC meeting dates. The first output is an FOMC calendar, which includes all the necessary months for which the futures contract pricing data is required in the FedWatch calculations. The second output is a dataframe that presents rate expectations. In addition to these primary outputs, PyFedWatch also provides several intermediate outputs that can be valuable for gaining a deeper understanding of the methodology.
 
 
 <br>
@@ -61,15 +62,12 @@ fig = fomc.plot_fomc_calendar()
 ```
 import pyfedwatch as fw
 
-
-fedwatch = fw.fedwatch.FedWatch(
-                        watch_date = '2023-03-10',
-                        fomc_dates = fomc_dates,
-                        num_upcoming = 9,
-                        user_func = read_price_history,
-                        path = '../data/contracts')
-
-fedwatch.generate_hike_info(watch_date_rate=(4.5,4.75))
+fedwatch = fw.fedwatch.FedWatch(watch_date = '2023-03-10',
+                                fomc_dates = fomc_dates,
+                                num_upcoming = 9,
+                                user_func = read_price_history,
+                                path = '../data/contracts')
+fedwatch.generate_hike_info(watch_date_rate=(4.5,4.75)).style.format("{:.1%}").background_gradient(axis=1)
 ```
 
 <div align="center">
