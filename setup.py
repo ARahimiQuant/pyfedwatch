@@ -21,6 +21,7 @@ setup(
         'tzdata>=2023.3',
         'matplotlib>=3.8.0',
         'holidays>=0.32',
+        'openpyxl>=3.1.2',
     ],
     license='Apache-2.0',
 )
