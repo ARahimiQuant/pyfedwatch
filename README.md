@@ -7,7 +7,7 @@
   </br>
 </div>
 
-# Welcome to the Python Implementation of CME FedWatch Tool!
+# A Python Implementation of the CME FedWatch Tool Methodology
 
 <div align="center">
     <br>
