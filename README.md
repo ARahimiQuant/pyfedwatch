@@ -1,6 +1,6 @@
 <div align="center">
    <a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html">
-   <img src="./images/cme_fedwatch.png" width="100%" 
+   <img src="https://github.com/ARahimiQuant/pyfedwatch/blob/master/images/cme_fedwatch.png" width="100%" 
    style="margin-left: auto; margin-right: auto; display:block;">
    
    </a>
@@ -49,7 +49,7 @@ fig = fomc.plot_fomc_calendar()
 ```
 
 <div align="center">
-   <img src="./images/fomc_calendar.png" width="100%" 
+   <img src="https://github.com/ARahimiQuant/pyfedwatch/blob/master/images/fomc_calendar.png" width="100%" 
    style="margin-left: auto; margin-right: auto; display:block;">
    
    </a>
@@ -70,7 +70,7 @@ fedwatch.generate_hike_info(watch_date_rate=(4.5,4.75)).style.format("{:.1%}").b
 ```
 
 <div align="center">
-   <img src="./images/rate_expectations.png" width="95%" 
+   <img src="https://github.com/ARahimiQuant/pyfedwatch/blob/master/images/rate_expectations.png" width="95%" 
    style="margin-left: auto; margin-right: auto; display:block;">
    
    </a>
