@@ -13,7 +13,7 @@
     <br>
 </div>
 
->This public repository exists solely to explain how the CME FedWatch tool calculates FOMC rate move probabilities.
+>This public repository exists solely to explain how the CME FedWatch tool calculates FOMC rate move probabilities. Please note that the content in this repository is for informational purposes only and should not be regarded as investment advice.
 
 <div align="center">
     <br>
