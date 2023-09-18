@@ -1,4 +1,6 @@
 import pandas as pd
+from datetime import datetime
+import pandas_datareader as pdr
 
 
 
@@ -33,3 +35,43 @@ def read_price_history(symbol: str, path: str) -> pd.DataFrame:
     :return: (pd.DataFrame) A DataFrame containing OHLCV, open interest, and contract symbol columns, with the Date index.
     """
     return pd.read_excel(f'{path}/{symbol}.xlsx', index_col=0)
+
+
+
+def get_fedfunds_range() -> pd.DataFrame:
+    """
+    Retrieve and return the historical Federal Funds target rate lower (LL) and upper limits (UL) from the FRED database.
+
+    Before December 16, 2008, the Federal Reserve used a single target rate without distinct lower and upper limits. Therefore,
+    for dates prior to that, both the lower and upper limits in the output DataFrame will be equal. However, after that date,
+    the lower and upper limits are distinct.
+
+    :return: (pd.DataFrame) A DataFrame indexed by date containing historical Federal Funds target rate lower (LL) and upper limits (UL).
+    """
+    # Find current date
+    current_date = datetime.now()
+
+    try:
+        # Get fed funds target rate lower and upper limits, for dates after 2008-12-16
+        ff_ll = pdr.DataReader('DFEDTARL','fred',start=datetime(1960,1,1),end=current_date)
+        ff_ul = pdr.DataReader('DFEDTARU','fred',start=datetime(1960,1,1),end=current_date)
+
+        # Get target rate for dates before 2008-12-16, from "https://fred.stlouisfed.org/series/DFEDTAR", 
+        ff_tgt = pdr.DataReader('DFEDTAR','fred',start=datetime(1960,1,1),end=current_date)
+
+    except Exception as e:
+        print(f"Error fetching data from FRED: {e}")
+
+    # Concat rate limits and target rate dataframes
+    ff_range = pd.concat([ff_ll, ff_ul, ff_tgt], axis=1)
+
+    # Fill lower/upper limits with target rates for dates before 2008-12-16 
+    ff_range['DFEDTARL'].fillna(ff_range['DFEDTAR'], inplace=True)
+    ff_range['DFEDTARU'].fillna(ff_range['DFEDTAR'], inplace=True)
+
+    # Drop target rate column, DFEDTAR, cahnge the name of index and columns
+    ff_range.drop('DFEDTAR', axis=1, inplace=True)
+    ff_range.index.name = 'Date'
+    ff_range.columns = ['LL','UL']
+    
+    return ff_range
