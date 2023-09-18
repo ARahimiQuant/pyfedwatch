@@ -31,6 +31,16 @@ PyFedWatch is a Python implementation of the CME FedWatch Tool. It is packaged t
 
 The scope of PyFedWatch is focused solely on the implementation of the FedWatch methodology. Providing the fed funds futures pricing data and FOMC meetings data is beyond the scope of this package. However, we have included sample data to demonstrate how the package can be used in practice. The package does not offer up-to-date data preparation as part of its functionality. PyFedWatch follows a methodology that differs slightly from the one described on the CME website but provides the same probabilities as the tool displayed on the website.
 
+## PyFedWatch Installation
+
+You can easily install PyFedWatch using the Python package manager `pip` and by running the following command:
+
+
+   ```bash
+   pip install pyfedwatch
+   ```
+
+
 ## PyfedWatch Outputs
 
 PyFedWatch generates two significant outputs when provided with fed funds futures pricing data and FOMC meeting dates. The first output is an FOMC calendar, which includes all the necessary months for which the futures contract pricing data is required in the FedWatch calculations. The second output is a dataframe that presents rate expectations. In addition to these primary outputs, PyFedWatch also provides several intermediate outputs that can be valuable for gaining a deeper understanding of the methodology.
@@ -66,7 +76,7 @@ fedwatch = fw.fedwatch.FedWatch(watch_date = '2023-03-10',
                                 num_upcoming = 9,
                                 user_func = read_price_history,
                                 path = '../data/contracts')
-fedwatch.generate_hike_info(watch_date_rate=(4.5,4.75)).style.format("{:.1%}").background_gradient(axis=1)
+fedwatch.generate_hike_info(rate_cols=True).style.format("{:.1%}").background_gradient(axis=1)
 ```
 
 <div align="center">
