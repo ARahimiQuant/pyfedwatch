@@ -3,6 +3,7 @@ import numpy as np
 import math
 from datetime import datetime
 from calendar import monthrange
+import pandas_datareader as pdr
 import inspect
 from .fomc import FOMC
 
@@ -26,6 +27,7 @@ class FedWatch():
         
         # Initizlize rate expectation
         self.rate_expectations = None
+        self.watch_rate_range = None
         
        
         
@@ -214,7 +216,7 @@ class FedWatch():
     
     
     
-    def generate_hike_info(self, watch_date_rate = None):
+    def generate_hike_info(self, rate_cols = True, watch_rate_range = None):
         """
         Generates hike/cut size with relevant probabilities for the requested number of upcoming FOMC meetings
         form the watch date.
@@ -251,6 +253,29 @@ class FedWatch():
             unique_prob = np.bincount(indices, weights=prob_list_flat)
             
             return unique_size, unique_prob
+        
+        # Find watch date rate range
+        if rate_cols and not(watch_rate_range):
+            
+            # Extracts watch date and try to get the rate range from FRED database
+            watch_date = self.fomc_data.watch_date
+            
+            try:
+                # For watch dates after December 16, 2008, get lower and upper limit of target rate
+                if watch_date >= datetime(2008,12,16):
+                    ll = pdr.DataReader('DFEDTARL','fred',start=watch_date,end=watch_date).iloc[0,0]
+                    ul = pdr.DataReader('DFEDTARU','fred',start=watch_date,end=watch_date).iloc[0,0]
+                    watch_rate_range = (ll, ul)
+                    
+                # For watch dates before December 16, 2008, get target rate and consider it as upper and lower limit
+                else:
+                    ll = ul = pdr.DataReader('DFEDTAR','fred',start=watch_date,end=watch_date).iloc[0,0]
+                    watch_rate_range = (ll, ul)
+                
+                self.watch_rate_range = watch_rate_range
+            except:
+                raise ValueError('Unable to get target rate limits from FRED database, please provide (ll, ul) for "watch_rate_range" or try again.')
+    
         
         # Generate binary hike info and extract to a dictionary
         bin_hike_df = self.generate_binary_hike_info()
@@ -302,18 +327,20 @@ class FedWatch():
         fedwatch_df.reset_index(inplace=True)
         fedwatch_df.set_index(['WatchDate','FOMCDate'], inplace=True)
         
-        # Modify column names if necessary
-        if watch_date_rate:
+        #Modify column names if necessary
+        if rate_cols:
             rate_columns = []
-            rate_diff = watch_date_rate[1] - watch_date_rate[0]
+            rate_diff = watch_rate_range[1] - watch_rate_range[0]
             for column_name in fedwatch_df.columns:
                 col_name_float = float(column_name/100)
                 if rate_diff == 0:
-                    new_col_name = f"{watch_date_rate[0] + col_name_float:.2f}"
+                    new_col_name = f"{watch_rate_range[0] + col_name_float:.2f}"
                 else:
-                     new_col_name = f"{watch_date_rate[0] + col_name_float:.2f}-{watch_date_rate[1] + col_name_float:.2f}"
+                     new_col_name = f"{watch_rate_range[0] + col_name_float:.2f}-{watch_rate_range[1] + col_name_float:.2f}"
                 rate_columns.append(new_col_name)
             fedwatch_df.columns = rate_columns
+            self.watch_rate_range = watch_rate_range
+        
         
         # Update class data
         self.rate_expectations = fedwatch_df
