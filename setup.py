@@ -22,6 +22,7 @@ setup(
         'matplotlib>=3.8.0',
         'holidays>=0.32',
         'openpyxl>=3.1.2',
+        'pandas_datareader==0.10.0',
     ],
     license='Apache-2.0',
 )
