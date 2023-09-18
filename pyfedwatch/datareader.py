@@ -58,9 +58,9 @@ def get_fedfunds_range() -> pd.DataFrame:
 
         # Get target rate for dates before 2008-12-16, from "https://fred.stlouisfed.org/series/DFEDTAR", 
         ff_tgt = pdr.DataReader('DFEDTAR','fred',start=datetime(1960,1,1),end=current_date)
-
+    
     except Exception as e:
-        print(f"Error fetching data from FRED: {e}")
+        raise Exception(f"Error fetching data from FRED: {e}")
 
     # Concat rate limits and target rate dataframes
     ff_range = pd.concat([ff_ll, ff_ul, ff_tgt], axis=1)
