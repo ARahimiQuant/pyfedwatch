@@ -7,6 +7,8 @@
   </br>
 </div>
 
+[![Downloads](https://static.pepy.tech/personalized-badge/pyfedwatch?period=total&units=international_system&left_color=black&right_color=green&left_text=Downloads)](https://www.pepy.tech/projects/pyfedwatch)
+
 # A Python Implementation of the CME FedWatch Tool Methodology
 
 <div align="center">
