@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='pyfedwatch',
-    version='1.1.0',
+    version='1.2.0',
     description='Python Implementation of the CME FedWatch Tool for Estimating Probabilities of Federal Funds Rate Changes at Upcoming FOMC Meetings.',
     author='ALI RAHIMI',
     author_email='a.rahimi.aut@gmail.com',
@@ -22,6 +22,7 @@ setup(
         'matplotlib>=3.8.0',
         'holidays>=0.32',
         'openpyxl>=3.1.2',
+        'beautifulsoup4>=4.12.2',
         'pandas_datareader==0.10.0',
     ],
     license='Apache-2.0',
